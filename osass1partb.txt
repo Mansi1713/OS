@@ -1,0 +1,211 @@
+﻿Os Assignment 1 - Part B
+
+#! /bin/bash
+opt=1
+while [ "$opt" -lt 6 ]
+do
+
+	echo -e "Choose one of the Following\n1. Create a New Address Book\n2. View Records\n3. Insert new Record\n4. Delete a Record\n5. Modify a Record\n6. Exit"
+	# echo -e, enables special features of echo to use \n \t \b etc.
+	read opt
+	case $opt in
+
+	1)
+		echo "Enter filename"
+		read fileName
+		if [ -e $fileName ] ; then	# -e to check if file exists, if exits remove the file
+			rm $fileName
+		fi
+		cont=1
+		echo  "NAME\tNUMBER\t\tADDRESS\n===============================\n" | cat >> $fileName
+		while [ "$cont" -gt 0 ]
+		do
+			echo "\nEnter Name"
+			read name
+			echo "Enter Phone Number of $name"
+			read number
+			echo "Enter Address of $name"
+			read address
+			echo "$name\t$number\t\t$address" | cat >> $fileName
+			echo "Enter 0 to Stop, 1 to Enter next"
+			read cont
+		done
+		;;
+
+	2)
+		cat $fileName
+		;;
+	3)
+		echo "\nEnter Name"
+		read name
+		echo "Enter Phone Number of $name"
+		read number
+		echo "Enter Address of $name"
+		read address
+		echo "$name\t$number\t\t$address" | cat >> $fileName
+		;;
+	4)
+		echo "Delete record\nEnter Name/Phone Number"
+		read pattern
+		temp="temp"
+		grep -v $pattern $fileName | cat >> $temp 
+		rm $fileName
+		cat $temp | cat >> $fileName
+		rm $temp
+		;;
+	5)
+		echo "Modify record\nEnter Name/Phone Number"
+		read pattern
+		temp="temp"
+		grep -v $pattern $fileName | cat >> $temp
+		rm $fileName
+		cat $temp | cat >> $fileName
+		rm $temp
+		echo "Enter Name"
+		read name
+		echo "Enter Phone Number of $name"
+		read number
+		echo "Enter Address of $name"
+		read address
+		echo -e "$name\t$number\t$address" | cat >> $fileName
+		;;
+	esac
+done
+
+
+Output:
+
+(base) rmdstic@rmdstic-OptiPlex-3010:~$ ./1.b.sh
+Choose one of the Following
+1. Create a New Address Book
+2. View Records
+3. Insert new Record
+4. Delete a Record
+5. Modify a Record
+6. Exit
+1
+Enter filename
+employee
+\nEnter Name
+Apeksha 
+Enter Phone Number of Apeksha
+7854855457  
+Enter Address of Apeksha
+XYZ
+Enter 0 to Stop, 1 to Enter next
+1
+\nEnter Name
+Samrudhi
+Enter Phone Number of Samrudhi
+8754755474 
+Enter Address of Samrudhi
+PQR
+Enter 0 to Stop, 1 to Enter next
+1
+\nEnter Name
+Sankalp
+Enter Phone Number of Sankalp
+2385485647 
+Enter Address of Sankalp
+LMN
+Enter 0 to Stop, 1 to Enter next
+0
+Choose one of the Following
+1. Create a New Address Book
+2. View Records
+3. Insert new Record
+4. Delete a Record
+5. Modify a Record
+6. Exit
+2
+NAME\tNUMBER\t\tADDRESS\n===============================\n
+Apeksha\t7854855457\t\tXYZ
+Samrudhi\t8754755474\t\tPQR
+Sankalp\t2385485647\t\tLMN
+Choose one of the Following
+1. Create a New Address Book
+2. View Records
+3. Insert new Record
+4. Delete a Record
+5. Modify a Record
+6. Exit
+3
+\nEnter Name
+Ajay
+Enter Phone Number of Ajay
+6587435675 
+Enter Address of Ajay
+ABC
+Choose one of the Following
+1. Create a New Address Book
+2. View Records
+3. Insert new Record
+4. Delete a Record
+5. Modify a Record
+6. Exit
+2
+NAME\tNUMBER\t\tADDRESS\n===============================\n
+Apeksha\t7854855457\t\tXYZ
+Samrudhi\t8754755474\t\tPQR
+Sankalp\t2385485647\t\tLMN
+Ajay\t6587435675\t\tABC
+Choose one of the Following
+1. Create a New Address Book
+2. View Records
+3. Insert new Record
+4. Delete a Record
+5. Modify a Record
+6. Exit
+4
+Delete record\nEnter Name/Phone Number
+Ajay
+Choose one of the Following
+1. Create a New Address Book
+2. View Records
+3. Insert new Record
+4. Delete a Record
+5. Modify a Record
+6. Exit
+2
+NAME\tNUMBER\t\tADDRESS\n===============================\n
+Apeksha\t7854855457\t\tXYZ
+Samrudhi\t8754755474\t\tPQR
+Sankalp\t2385485647\t\tLMN
+Choose one of the Following
+1. Create a New Address Book
+2. View Records
+3. Insert new Record
+4. Delete a Record
+5. Modify a Record
+6. Exit
+5
+Modify record\nEnter Name/Phone Number
+Apeksha
+Enter Name
+Apeksha
+Enter Phone Number of Apeksha
+8754785574
+Enter Address of Apeksha
+QRT
+Choose one of the Following
+1. Create a New Address Book
+2. View Records
+3. Insert new Record
+4. Delete a Record
+5. Modify a Record
+6. Exit
+2
+NAME\tNUMBER\t\tADDRESS\n===============================\n
+Samrudhi\t8754755474\t\tPQR
+Sankalp\t2385485647\t\tLMN
+Apeksha	8754785574	QRT
+Choose one of the Following
+1. Create a New Address Book
+2. View Records
+3. Insert new Record
+4. Delete a Record
+5. Modify a Record
+6. Exit
+6
+(base) rmdstic@rmdstic-OptiPlex-3010:~$ ^C
+(base) rmdstic@rmdstic-OptiPlex-3010:~$ ^C
